@@ -3,7 +3,7 @@ Programmer Name: Anh Nhu Nhan Nguyen
 Date: 12/05/2020
 Filename: PRONguyenAnhNhuNhan.py
 '''
-# MAIN PROGRAM
+# MAIN ORIGINAL PROGRAM
 
 #Program Description:
 '''
