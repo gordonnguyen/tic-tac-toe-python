@@ -61,43 +61,37 @@ ROWS = COLS = 3
 PLAYER_1_SYMBOL = '[X]'
 PLAYER_2_SYMBOL = '[O]'
 
-
 def main():
     print("Welcome to Tic-Tac-Toe!")
     print(LINE1)
     
     start_game = 'y'            # Value to start/replay the game
-    while start_game == 'y' or start_game == 'Y':
+    while start_game.upper() == 'Y' or start_game.upper() == 'YES':
         # Tic Tac Toe Grid #
         grid = [[EMPTY_SPACE]*COLS,       
                 [EMPTY_SPACE]*COLS,
                 [EMPTY_SPACE]*COLS]
         display_grid(grid)
-        
-        while True:
+        winner = False
+        for i in range(9):
+            if i%2 == 0:
+                symbol = PLAYER_1_SYMBOL
+                player_name = 'Player One'
+            else:
+                symbol = PLAYER_2_SYMBOL
+                player_name = 'Player Two'
             ### Get player input, mark on the grid and check for winning condition ###
-            symbol = PLAYER_1_SYMBOL
-            print("It's Player One",symbol,"turn!")
+            print("It's", player_name, symbol,"turn!")
             grid = mark_player_move(grid,symbol)    # Get input (row and col) from player 1 and mark on the grid
             display_grid(grid)
             if winning_condition(grid, symbol):     # Check if player 1 win, break if True
-                winner = 'Player One'               # Variable to declare winner or none at result screen
+                winner = player_name               # Variable to declare winner or none at result screen
                 break
-            
-            # Check if no winner and no space left to play(DRAW)
-            if not any(EMPTY_SPACE in x for x in grid):     #Because the maximum move is 9 (once player one make the last move)
-                winner = False                              #This if condition is placed between 2 player
+            '''
+            if not any(EMPTY_SPACE in x for x in grid):     
+                winner = False
                 break
-
-            ### Get player 2 input (row/col) and check for winning condition ###
-            symbol = PLAYER_2_SYMBOL
-            print("It's Player Two",symbol,"turn!")
-            grid = mark_player_move(grid,symbol)    # Get input (row and col) from player 2 and mark on the grid
-            display_grid(grid)
-            if winning_condition(grid, symbol):     # Check if player 2 win, break if True
-                winner = 'Player Two'
-                break
-
+            '''
         display_result(winner)
         print(LINE1)
         start_game = input("Do you you want to play again? y/n: ")
@@ -160,7 +154,13 @@ def get_player_input_within_range(player_no, input_type):
         print("ERROR! The "+input_type+" is out of range!")
         player_input = int(input("Player "+player_no+" | Enter "+input_type+": "))-1
     return player_input
-
+'''
+def check_player_move_and_winner(symbol, player_name)
+    print("It's ",player_name, symbol,"turn!")
+    grid = mark_player_move(grid,symbol)    # Get input (row and col) from player 1 and mark on the grid
+    display_grid(grid)
+    return grid
+    '''
 ###############################################################
 
 
