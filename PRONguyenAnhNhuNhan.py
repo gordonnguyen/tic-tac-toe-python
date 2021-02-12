@@ -82,7 +82,7 @@ def main():
                 player_name = 'Player Two'
             ### Get player input, mark on the grid and check for winning condition ###
             print("It's", player_name, symbol,"turn!")
-            grid = mark_player_move(grid,symbol)    # Get input (row and col) from player 1 and mark on the grid
+            grid = mark_player_move(grid, symbol, player_name)    # Get input (row and col) from player 1 and mark on the grid
             display_grid(grid)
             if winning_condition(grid, symbol):     # Check if player 1 win, break if True
                 winner = player_name               # Variable to declare winner or none at result screen
@@ -102,9 +102,7 @@ def main():
 
 ### Display grid /and current moves(if any) ###
 def display_grid(grid):
-    print()
-    print()
-    print(LINE2)
+    print('\n'+LINE2)
     for r in range(ROWS):               
         for c in range(COLS):
             print(grid[r][c], end=' ')
@@ -115,52 +113,40 @@ def display_grid(grid):
 ##############################################################
 
 ### Get row and column input from player and mark it on grid ###
-def mark_player_move(grid,symbol):
-    
-    # Check which player is making the move
-    if symbol == PLAYER_1_SYMBOL:            
-        player_no = 'One'
-    else:
-        player_no = 'Two'
-
+def mark_player_move(grid,symbol, player_name):
     # Get and validate player input
-    player_row, player_col = get_and_validate_player_input(grid,player_no)
-
+    player_row, player_col = get_and_validate_player_input(grid,player_name)
     # Mark player symbol
     grid[player_row][player_col] = symbol
     return grid
 
-
 ### Get input from player and make sure it's valid ###
-def get_and_validate_player_input(grid,player_no):
-
+def get_and_validate_player_input(grid,player_name):
     #Get input that is within range of the grid
-    player_row = get_player_input_within_range(player_no,'row')     
-    player_col = get_player_input_within_range(player_no,'column')
-
+    player_row = get_player_input_within_range(player_name,'row')     
+    player_col = get_player_input_within_range(player_name,'column')
     #Check if the space is not occupied by another player
     while grid[player_row][player_col] != EMPTY_SPACE:    
         print("ERROR! It's occupied by another Player!!!")
-        player_row = get_player_input_within_range(player_no,'row') 
-        player_col = get_player_input_within_range(player_no,'column')
-        
+        player_row = get_player_input_within_range(player_name,'row') 
+        player_col = get_player_input_within_range(player_name,'column')
     return player_row, player_col
 
 
 ### Get input(row or col) from player and make sure it is within range ###
-def get_player_input_within_range(player_no, input_type):
-    player_input = int(input("Player "+player_no+" | Enter "+input_type+": "))-1
-    while player_input < 0 or player_input > 2:
-        print("ERROR! The "+input_type+" is out of range!")
-        player_input = int(input("Player "+player_no+" | Enter "+input_type+": "))-1
+def get_player_input_within_range(player_name, input_type):
+    while True:
+        try:
+            player_input = int(input("Player "+player_name+" | Enter "+input_type+": "))-1
+            while player_input < 0 or player_input > 2:
+                print("ERROR! The "+input_type+" is out of range!")
+                player_input = int(input("Player "+player_name+" | Enter "+input_type+": "))-1
+        except Exception as err:
+            print(err)
+        else:
+            break
     return player_input
-'''
-def check_player_move_and_winner(symbol, player_name)
-    print("It's ",player_name, symbol,"turn!")
-    grid = mark_player_move(grid,symbol)    # Get input (row and col) from player 1 and mark on the grid
-    display_grid(grid)
-    return grid
-    '''
+
 ###############################################################
 
 
