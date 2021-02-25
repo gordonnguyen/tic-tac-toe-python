@@ -11,21 +11,37 @@ def getProductPrice(productUrl):
     soup = bs4.BeautifulSoup(res.text, "html.parser")
     
     if 'ebay.com' in productUrl:
-        pro_name = soup.select('#itemTitle')
-        elems = soup.select('#prcIsum')
-        if elems == []:
-            elems = soup.select('#mm-saleDscPrc')
-        return elems[0].text.strip(), pro_name[0].text.replace('Details about', '').strip()
-    elif 'camelcamelcamel.com' in productUrl:
-        elems = soup.select('#content > div:nth-child(2) > div.column.column-block.small-12.medium-3.medium-text-right > div:nth-child(1) > div.column.small-8.medium-12 > p > span > span')
-        return elems
+        price_html_selector_list = ['#prcIsum', '#mm-saleDscPrc', '#prcIsum_bidPrice']
+        product_name = soup.select('#itemTitle')
+        for selector in price_html_selector_list:
+            product_price = soup.select(selector)
+            if product_price != '':
+                break
 
-def print_example():
-    print("SUCCESS")
+        #if product_price == []:
+        #    product_price = 'No product_price available'
+        print(product_price)
+        print(product_name[0].text.replace('Details about', '').strip())
+
+        return product_price[0].text.strip(), product_name[0].text.replace('Details about', '').strip()
+
+        #return product_price[0].text.strip(), product_name[0].text.replace('Details about', '').strip()
+
+'''
+        if product_price == []:
+            product_price = soup.select('#mm-saleDscPrc')
+'''
+'''
+    elif 'camelcamelcamel.com' in productUrl:
+        product_price = soup.select('#content > div:nth-child(2) > div.column.column-block.small-12.medium-3.medium-text-right > div:nth-child(1) > div.column.small-8.medium-12 > p > span > span')
+        return product_price
+'''
+
+
 #productUrl = input("Enter Drop\'s product URL: ")
 
 #if productUrl == '':
 #    productUrl = input(pyperclip.paste)
 
-#price = getProductPrice(productUrl)
-#print('The price on Ebay is',price)
+#product_price = getProductPrice(productUrl)
+#print('The product_price on Ebay is',product_price)
