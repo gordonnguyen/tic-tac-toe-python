@@ -95,7 +95,6 @@ def main():
         display_result(winner)
         print(LINE1)
         start_game = input("Do you you want to play again? y/n: ")
-        
     print(LINE1) 
     print("Game closed.")
 
